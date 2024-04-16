@@ -1,0 +1,26 @@
+body {
+    background-image: url('/static/images/background.jpg'); /* Update the path to your background image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+
+}
+.login-heading {
+    margin-top: 20px; /* Adjust the value to increase or decrease spacing */
+}
+.container {
+    background-color: rgba(255, 255, 255, 0.7); /* Background color with reduced opacity */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+h2 {
+    color: #007bff;
+}
+
+p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <!-- Bootstrap CSS -->
+    
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h2>Search Results</h2>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Train ID</th>
+            <th>Train Name</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Departure Date</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for train in trains %}
+          <tr>
+            <td>{{ train.train_id }}</td>
+            <td>{{ train.name }}</td>
+            <td>{{ train.from_location }}</td>
+            <td>{{ train.to_location }}</td>
+            <td>{{ train.date }}</td>
+            <td>{{ train.price }}</td>
+            <td>
+              <button class="btn btn-primary book-btn" data-train-id="{{ train.train_id }}" data-toggle="modal" data-target="#bookingModal">
+                Book It
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS (optional, if you need to use Bootstrap JS components) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Booking Modal -->
+<div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bookingModalLabel">Confirm Booking</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="bookingForm" action="{{ url_for('booking') }}" method="POST">
+          <input type="hidden" id="trainIdInput" name="train_id">
+          <div class="form-group">
+            <label for="numPassengers">Number of Passengers:</label>
+            <input type="number" class="form-control" id="numPassengers" name="num_passengers" min="1" required>
+          </div>
+          <div class="form-group">
+            <label for="seatSelection">Seat Selection:</label>
+            <select class="form-control" id="seatSelection" name="seat" required>
+              <option value="1A">1A</option>
+              <option value="1B">1B</option>
+              <option value="1C">1C</option>
+              <option value="1A">1D</option>
+              <option value="1B">1E</option>
+              <option value="1C">1F</option>
+              <option value="1A">1G</option>
+              <option value="1B">1H</option>
+              <option value="1C">1I</option>
+              <option value="1A">1J</option>
+              <option value="1B">1K</option>
+              <option value="1C">1L</option>
+              <!-- Add more options as needed -->
+          </select>
+          
+          </div>
+          <button type="submit" class="btn btn-primary">Confirm Booking</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Handle book button click
+  $(document).on("click", ".book-btn", function () {
+    var trainId = $(this).data('train-id');
+    $("#trainIdInput").val(trainId);
+  });
+</script>
+
+</body>
+</html>

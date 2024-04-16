@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Page</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">              
+</head>
+<body>
+<div class="container">
+    <div class="row">    
+        <h1>Booking Details</h1>
+    </div>
+    <br>
+    <div class="row">    
+        <h2>Train Details</h2>
+        <p><strong>Name:</strong> {{ train.name }}</p>
+        <p><strong>From:</strong> {{ train.from }}</p>
+        <p><strong>To:</strong> {{ train.to }}</p>
+        <p><strong>Departure Date:</strong> {{ train.departure_date }}</p>
+        <p><strong>Price:</strong> ${{ train.price }}</p>
+    </div>
+    <br>
+    <div class="row">
+        <form action="/booking" method="POST">
+            <div class="form-group">
+                <label for="numPassengers">Number of Passengers:</label>
+                <input type="number" class="form-control" id="numPassengers" name="num_passengers" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="seatSelection">Seat Selection:</label>
+                <select multiple class="form-control" id="seatSelection" name="seat" required>
+                    <option>Seat 1</option>
+                    <option>Seat 2</option>
+                    <!-- Add more seat options as needed -->
+                </select>
+            </div>
+            <!-- Add a hidden input field for train_id -->
+            <input type="hidden" name="train_id" value="{{ train.train_id }}">
+            <button type="submit" class="btn btn-primary">Confirm Booking</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

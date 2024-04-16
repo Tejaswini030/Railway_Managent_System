@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User Account</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">              
+</head>
+<body>
+<div class="container mt-5">
+    <div class="row">    
+        <h1>Staff Profile</h1>
+    </div>
+    <br>
+    <div class="row">    
+        Logged in : <strong>{{session.name}} | <a href="{{ url_for('logout') }}"> Logout</a>
+    </div>
+    <br><br>
+    <div class="row">
+        <h2>Welcome to the staff profile page...</h2> 
+    </div>      
+    <div class="row">
+		<a href="{{ url_for('add_train') }}" class="btn btn-primary">Add Train</a>
+    </div>
+</div>
+</body>
+</html>
