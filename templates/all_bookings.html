@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All Bookings</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">              
+</head>
+<body>
+<div class="container mt-5">
+    <h1>All Bookings</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>User ID</th>
+                <th>Train ID</th>
+                <th>Number of Passengers</th>
+                <th>Total Price</th>
+                <th>Booking Date</th>
+                <th>Seat Numbers</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in all_bookings %}
+            <tr>
+                <td>{{ booking.booking_id }}</td>
+                <td>{{ booking.user_id }}</td>
+                <td>{{ booking.train_id }}</td>
+                <td>{{ booking.num_passengers }}</td>
+                <td>{{ booking.total_price }}</td>
+                <td>{{ booking.booking_date }}</td>
+                <td>{{ booking.seat_numbers }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

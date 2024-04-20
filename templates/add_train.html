@@ -5,16 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Train</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container mt-5">
     <h2>Add Train</h2>
-    <form action="{{ url_for('add_train') }}" method="post">
+    <form action="/add_train" method="POST">
         <div class="form-group">
-            <label for="train_name">Train Name:</label>
-            <input type="text" class="form-control" id="train_name" name="train_name" required>
+            <label for="name">Train Name:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
         </div>
         <div class="form-group">
             <label for="from_location">From:</label>
@@ -25,6 +24,10 @@
             <input type="text" class="form-control" id="to_location" name="to_location" required>
         </div>
         <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" class="form-control" id="date" name="date" required>
+        </div>
+        <div class="form-group">
             <label for="departure_time">Departure Time:</label>
             <input type="time" class="form-control" id="departure_time" name="departure_time" required>
         </div>
@@ -32,9 +35,14 @@
             <label for="price">Price:</label>
             <input type="number" class="form-control" id="price" name="price" required>
         </div>
-        <input type="hidden" name="staff_id" value="{{ session.userid }}">
-        <button type="submit" class="btn btn-primary">Add Train</button>
-    </form>
+        <div class="form-group">
+            <label for="staffid">Staff Id:</label>
+            <input type="number" class="form-control" id="staffid" name="staffid" required>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Add Train</button>
+        </div>
+    </form>    </form>
 </div>
 </body>
 </html>

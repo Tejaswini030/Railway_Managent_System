@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All Trains</title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">              
+</head>
+<body>
+<div class="container mt-5">
+    <h1>All Trains</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Train Name</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Date</th>
+                <th>Departure Time</th>
+                <th>Price</th>
+                <th>Staff ID</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for train in all_trains %}
+            <tr>
+                <td>{{ train.name }}</td>
+                <td>{{ train.from_location }}</td>
+                <td>{{ train.to_location }}</td>
+                <td>{{ train.date }}</td>
+                <td>{{ train.departure_time }}</td>
+                <td>{{ train.price }}</td>
+                <td>{{ train.staffid }}</td>
+                <td>
+                    <form action="{{ url_for('delete_train') }}" method="POST">
+                        <input type="hidden" name="train_id" value="{{ train.train_id }}">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

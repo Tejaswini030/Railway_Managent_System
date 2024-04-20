@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Bookings</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        li:hover {
+            background-color: #e0e0e0;
+        }
+        .cancel-btn {
+            background-color: rgb(0, 0, 0);
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .cancel-btn:hover {
+            background-color: #242425;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Bookings</h1>
+        <ul>
+            {% for booking in bookings %}
+            <li>
+                Booking Date: {{ booking.booking_date }} | Train: {{ booking.name }} | From {{ booking.from_location }} to {{ booking.to_location }} on {{ booking.date }}
+                <button class="cancel-btn" onclick="cancelBooking({{ booking.booking_id }})">Cancel Booking</button>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script>
+// Function to cancel booking
+function cancelBooking(bookingId) {
+    fetch('/cancel_booking', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ bookingId: bookingId })
+    })
+    .then(response => {
+        if (response.redirected) {
+            // Redirect to the new page specified by the server
+            window.location.href = response.url;
+        } else {
+            // Handle other responses (e.g., display success/failure message)
+            console.log('Booking canceled successfully');
+        }
+    })
+    .catch(error => {
+        console.error('Error canceling booking:', error);
+    });
+}
+
+    </script>
+</body>
+</html>
