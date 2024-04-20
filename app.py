@@ -49,10 +49,10 @@ def staff_login():
         cursor.execute('SELECT * FROM staff_users WHERE email = %s AND password = %s', (email, password))
         staff = cursor.fetchone()  # Changed variable name to 'staff'
         if staff:
-            session['loggedin_staff'] = True  # Changed session variable name to 'loggedin_staff'
-            session['staff_id'] = staff['staffid']  # Changed session variable name to 'staff_id'
-            session['staff_name'] = staff['name']  # Changed session variable name to 'staff_name'
-            session['staff_email'] = staff['email']  # Changed session variable name to 'staff_email'
+            session['loggedin_staff'] = True  
+            session['staff_id'] = staff['staffid']  
+            session['staff_name'] = staff['name']  
+            session['staff_email'] = staff['email']   
             message = 'Logged in successfully!'
             return render_template('staff.html', message=message)
         else:
@@ -62,20 +62,16 @@ def staff_login():
 @app.route('/add_train', methods=['GET', 'POST'])
 def add_train():
     if request.method == 'GET':
-<<<<<<< HEAD
         return render_template('add_train.html')
 
     elif request.method == 'POST':
-        # Extract data from the form submission
         name = request.form['name']
-=======
         if 'loggedin' in session and session['loggedin'] and 'role' in session and session['role'] == 'staff':
             return render_template('add_train.html')
         else:
             return redirect(url_for('staff_login'))
     elif request.method == 'POST':
         train_name = request.form['name']
->>>>>>> e4780ae2b514fa062ddc7412e2b1cf2a677c774d
         from_location = request.form['from_location']
         to_location = request.form['to_location']
         date = request.form['date']
@@ -90,22 +86,16 @@ def add_train():
         cursor.close()
         message = "Train added successfully!"
 
-<<<<<<< HEAD
-        # Redirect the user back to the staff dashboard after adding a train
         return render_template('staff.html', message=message)
-=======
     return render_template('staff.html')
->>>>>>> e4780ae2b514fa062ddc7412e2b1cf2a677c774d
 
 @app.route('/view_all_trains')
 def view_all_trains():
-    # Query the database to retrieve all trains
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * FROM trains")
     all_trains = cursor.fetchall()
     cursor.close()
 
-    # Render the template with the retrieved trains data
     return render_template('all_trains.html', all_trains=all_trains)
 
 @app.route('/delete_train', methods=['POST'])
@@ -113,24 +103,20 @@ def delete_train():
     if request.method == 'POST':
         train_id = request.form['train_id']
         
-        # Perform the deletion logic here (e.g., delete the train from the database)
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute("DELETE FROM trains WHERE train_id = %s", (train_id,))
         mysql.connection.commit()
         cursor.close()
         
-        # Redirect back to the view_all_trains page after deletion
         return redirect(url_for('view_all_trains'))
     
 @app.route('/view_all_bookings')
 def view_all_bookings():
-    # Fetch all bookings from the database
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     cursor.execute("SELECT * FROM booking")
     all_bookings = cursor.fetchall()
     cursor.close()
 
-    # Render the template with the bookings data
     return render_template('all_bookings.html', all_bookings=all_bookings)
 
 
@@ -198,7 +184,7 @@ def search():
 
     cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     query_params = []
-    query_string = "SELECT * FROM trains WHERE 1=1"  # Base query string
+    query_string = "SELECT * FROM trains WHERE 1=1"  
 
     if from_location:
         query_string += " AND from_location LIKE %s"
@@ -226,30 +212,23 @@ import MySQLdb.cursors
 @app.route('/view_bookings')
 def view_bookings():
     if 'loggedin' in session and session['loggedin']:
-        # Check if the user is logged in
         user_id = session['userid']
         
-        # Query the database to retrieve bookings for the current user
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute("SELECT b.*, t.name, t.from_location, t.to_location, t.date FROM booking b JOIN trains t ON b.train_id = t.train_id WHERE b.user_id = %s", (user_id,))
         bookings = cursor.fetchall()
         cursor.close()
 
-        # Render the template with the bookings data
         return render_template('view_bookings.html', bookings=bookings)
     else:
-        # If user is not logged in, redirect to login page
         return redirect(url_for('login'))
     
 @app.route('/cancel_booking', methods=['POST'])
 def cancel_booking():
     if request.method == 'POST':
-        # Get the booking ID from the request data
         data = request.json
         booking_id = data['bookingId']
         
-        # Perform the cancellation logic here (e.g., delete the booking from the database)
-        # Sample code to delete booking (you need to implement your own logic)
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         cursor.execute("DELETE FROM booking WHERE booking_id = %s", (booking_id,))
         mysql.connection.commit()
